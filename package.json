@@ -1,0 +1,24 @@
+{
+  "name": "home",
+  "version": "0.0.0",
+  "author": "Composition",
+  "github": "https://github.com/honelone/honelone.github.io",
+  "home": "https://honelone.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write src/",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.8"
+  }
+}
