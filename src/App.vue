@@ -4,18 +4,23 @@
   <!-- 壁纸 -->
   <Background @loadComplete="loadComplete" />
   <Transition name="fade" mode="out-in">
-    <header>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    </header>
+    <main id="main" v-if="store.imgLoadStatus">
+      <div class="container" v-show="!store.backgroundShow">
+        <Hitokoto />
+        <TimePanel />
+      </div>
+    </main>
   </Transition>
 </template>
 
 <script setup>
 import { watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import Loading from '@/components/Loading.vue'
-import Background from '@/components/Background.vue'
 import { mainStore } from '@/stores'
 import { helloInit, checkDays } from '@/utils/getTime.js'
+import Loading from '@/components/Loading.vue'
+import Background from '@/components/Background.vue'
+import Hitokoto from '@/components/Hitokoto.vue'
+import TimePanel from '@/components/TimePanel.vue'
 
 const store = mainStore()
 
@@ -64,3 +69,16 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', getWidth)
 })
 </script>
+
+<style lang="less" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  // height: 100vh;
+  margin: 0 auto;
+}
+</style>

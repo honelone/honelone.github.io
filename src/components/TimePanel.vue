@@ -19,78 +19,78 @@
 </template>
 
 <script setup>
-  import { getCurrentTime } from "@/utils/getTime"
-  import { mainStore } from "@/store"
-  import Weather from "@/components/Weather.vue"
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { getCurrentTime } from '@/utils/getTime'
+import { mainStore } from '@/stores'
+import Weather from '@/components/Weather.vue'
 
-  const store = mainStore()
+const store = mainStore()
 
-  // 当前时间
-  const currentTime = ref({})
-  const timeInterval = ref(null)
+// 当前时间
+const currentTime = ref({})
+const timeInterval = ref(null)
 
-  // 播放器 id
-  const playerHasId = import.meta.env.VITE_SONG_ID
+// 播放器 id
+const playerHasId = import.meta.env.VITE_SONG_ID
 
-  // 更新时间
-  const updateTimeData = () => {
-    currentTime.value = getCurrentTime()
-  }
+// 更新时间
+const updateTimeData = () => {
+  currentTime.value = getCurrentTime()
+}
 
-  onMounted(() => {
-    updateTimeData()
-    timeInterval.value = setInterval(updateTimeData, 1000)
-  })
+onMounted(() => {
+  updateTimeData()
+  timeInterval.value = setInterval(updateTimeData, 1000)
+})
 
-  onBeforeUnmount(() => {
-    clearInterval(timeInterval.value)
-  })
+onBeforeUnmount(() => {
+  clearInterval(timeInterval.value)
+})
 </script>
 
 <style lang="less" scoped>
-  .function {
-    height: 165px;
+.function {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  &.mobile {
+  }
+
+  .right {
+    padding: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    animation: fade 0.5s;
 
-    &.mobile {}
+    .time {
+      font-size: 1.1rem;
+      text-align: center;
 
-
-    .right {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      animation: fade 0.5s;
-
-      .time {
-        font-size: 1.1rem;
-        text-align: center;
-
-        .date {
-          text-overflow: ellipsis;
-          overflow-x: hidden;
-          white-space: nowrap;
-        }
-
-        .text {
-          margin-top: 10px;
-          font-size: 3.25rem;
-          letter-spacing: 2px;
-          font-family: "UnidreamLED";
-        }
-      }
-
-      .weather {
-        text-align: center;
-        width: 100%;
+      .date {
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap;
       }
+
+      .text {
+        margin-top: 10px;
+        font-size: 3.25rem;
+        letter-spacing: 2px;
+        font-family: 'UnidreamLED';
+      }
+    }
+
+    .weather {
+      text-align: center;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      white-space: nowrap;
     }
   }
+}
 </style>
