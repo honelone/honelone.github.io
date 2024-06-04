@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
     filter: blur(20px) brightness(0.3);
     transition: filter 0.3s, transform 0.3s;
     animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    animation-delay: 0.45s;
+    animation-delay: 1.1s;
   }
   .gray {
     opacity: 1;

@@ -17,7 +17,7 @@
 import { watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { mainStore } from '@/stores'
 import { helloInit, checkDays } from '@/utils/getTime.js'
-import Loading from '@/components/Loading.vue'
+import Loading from '@/components/Loading/index.vue'
 import Background from '@/components/Background.vue'
 import Hitokoto from '@/components/Hitokoto.vue'
 import TimePanel from '@/components/TimePanel.vue'
