@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="hitokoto cards"
-    @mouseenter="openMusicShow = true"
-    @mouseleave="openMusicShow = false"
-    @click.stop
-  >
-    <!-- 一言内容 -->
+  <div class="hitokoto custom-card" @click.stop>
     <Transition name="el-fade-in-linear" mode="out-in">
-      <div :key="hitokotoData.text" class="content" @click="updateHitokoto">
+      <div :key="hitokotoData.text" class="content" @click="handleUpdate">
         <span class="text">{{ hitokotoData.text }}</span>
         <span class="from">-「&nbsp;{{ hitokotoData.from }}&nbsp;」</span>
       </div>
@@ -17,35 +11,32 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getHitokoto } from '@/api'
-
-// 开启音乐面板按钮显隐
-const openMusicShow = ref(false)
 
 // 一言数据
-const hitokotoData = reactive({
-  text: '这里应该显示一句话',
-  from: '無名',
-})
+const hitokotoData = reactive({ text: '', from: '' })
 
 // 获取一言数据
+const isFetching = ref(false)
 const getHitokotoData = async () => {
+  if (isFetching.value) return
   try {
-    const result = await getHitokoto()
-    hitokotoData.text = result.hitokoto
-    hitokotoData.from = result.from
+    isFetching.value = true
+    const response = await fetch('https://v1.hitokoto.cn')
+    const { hitokoto, from } = await response.json()
+    hitokotoData.text = hitokoto
+    hitokotoData.from = from
   } catch (error) {
-    console.error({
-      message: '一言获取失败',
-    })
-    hitokotoData.text = '这里应该显示一句话'
+    hitokotoData.text = '这里应该显示一句话这里应该显示一句话'
     hitokotoData.from = '無名'
+  } finally {
+    setTimeout(() => {
+      isFetching.value = false
+    }, 1000)
   }
 }
 
 // 更新一言数据
-const updateHitokoto = () => {
-  // 防抖
+const handleUpdate = () => {
   getHitokotoData()
 }
 
@@ -56,11 +47,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .hitokoto {
-  // width: 100%;
-  // height: 100%;
-  padding: 20px;
-  animation: fadeAnimation 0.5s;
-
   .open-music {
     width: 100%;
     position: absolute;
