@@ -1,6 +1,6 @@
 <template>
   <!-- 功能区域 -->
-  <div :class="store.mobileFuncState ? 'function mobile' : 'function'">
+  <div :class="state.isMobile ? 'function mobile' : 'function'">
     <div class="right cards">
       <div class="time">
         <div class="date">
@@ -19,12 +19,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, inject, onMounted, onBeforeUnmount } from 'vue'
 import { getCurrentTime } from '@/utils/getTime'
-import { mainStore } from '@/stores'
-import Weather from '@/components/Weather.vue'
+import Weather from '@/components/Panel/Weather.vue'
 
-const store = mainStore()
+const state = inject('state')
 
 // 当前时间
 const currentTime = ref({})
@@ -64,7 +63,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    animation: fade 0.5s;
+    animation: fadeAnimation 0.5s;
 
     .time {
       font-size: 1.1rem;

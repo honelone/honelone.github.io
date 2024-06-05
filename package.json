@@ -14,7 +14,6 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix"
   },
   "dependencies": {
-    "pinia": "^2.1.7",
     "vue": "^3.4.21"
   },
   "devDependencies": {

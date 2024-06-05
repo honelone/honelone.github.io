@@ -1,7 +1,6 @@
 <template>
   <div
     class="hitokoto cards"
-    v-show="!store.musicOpenState"
     @mouseenter="openMusicShow = true"
     @mouseleave="openMusicShow = false"
     @click.stop
@@ -19,9 +18,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { getHitokoto } from '@/api'
-import { mainStore } from '@/stores'
-
-const store = mainStore()
 
 // 开启音乐面板按钮显隐
 const openMusicShow = ref(false)
@@ -60,10 +56,10 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .hitokoto {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   padding: 20px;
-  animation: fade 0.5s;
+  animation: fadeAnimation 0.5s;
 
   .open-music {
     width: 100%;

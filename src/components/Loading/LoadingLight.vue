@@ -26,7 +26,7 @@
     background-image: -webkit-linear-gradient(top, #00b9ff, transparent);
     border-top-left-radius: 120px;
     border-bottom-left-radius: 120px;
-    animation: colorAnimation 5s linear infinite;
+    animation: hueAnimation 5s linear infinite;
   }
   &::after {
     content: '';
@@ -37,7 +37,7 @@
     border-radius: 50%;
     background-color: #00b9ff;
     box-shadow: 0 0 5px #00b9ff, 0 0 10px #00b9ff, 0 0 15px #00b9ff, 0 0 25px #00b9ff;
-    animation: colorAnimation 5s linear infinite;
+    animation: hueAnimation 5s linear infinite;
   }
   .loading-rotate-item {
     position: relative;
@@ -46,22 +46,6 @@
     background-color: #00305a;
     // background-color: transparent;
     border-radius: 50%;
-  }
-}
-@keyframes rotateAnimation {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes colorAnimation {
-  from {
-    filter: hue-rotate(0) blur(2px);
-  }
-  to {
-    filter: hue-rotate(360deg) blur(2px);
   }
 }
 </style>

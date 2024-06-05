@@ -1,27 +1,22 @@
 <template>
-  <!--  :class="store.imgLoadStatus ? 'loaded' : null" -->
-  <div
-    id="loading-wrapper"
-    :class="store.imgLoadStatus ? 'loaded' : null"
-    @click="handleAppearance"
-  >
+  <!--  :class="state.imgLoaded ? 'loaded' : null" -->
+  <div class="loading-wrapper" :class="state.imgLoaded ? 'loaded' : null" @click="handleAppearance">
     <!-- <LoadingLight /> -->
     <LoadingCircle />
-    <span class="tip"> Loading... </span>
+    <span class="loading-wrapper-tip"> Loading... </span>
   </div>
 </template>
 
 <script setup>
-import { nextTick, watch } from 'vue'
-import { mainStore } from '@/stores'
+import { nextTick, watch, inject } from 'vue'
 import LoadingCircle from './LoadingCircle.vue'
-import LoadingLight from './LoadingLight.vue'
+// import LoadingLight from './LoadingLight.vue'
 
-const store = mainStore()
+const state = inject('state')
 
 // 配置
 watch(
-  () => store.imgLoadStatus,
+  () => state.imgLoaded,
   (value) => {
     if (value) {
       setTimeout(() => {
@@ -49,7 +44,7 @@ const handleAppearance = async () => {
 </script>
 
 <style lang="less" scoped>
-#loading-wrapper {
+.loading-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -61,7 +56,7 @@ const handleAppearance = async () => {
   z-index: 999;
   overflow: hidden;
   background: #537895;
-  .tip {
+  .loading-wrapper-tip {
     font-weight: bold;
     font-size: 20px;
   }

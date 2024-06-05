@@ -30,12 +30,4 @@
     transform: rotate(60deg);
   }
 }
-@keyframes rotateAnimation {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 </style>
