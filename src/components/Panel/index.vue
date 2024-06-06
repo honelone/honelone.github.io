@@ -1,13 +1,12 @@
 <template>
-  <Transition name="fade" mode="out-in">
-    <div class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }" v-if="state.imgLoaded">
-      <div class="container">
-        <Profile />
-        <Hitokoto />
-        <Time />
-      </div>
+  <div class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }" v-if="state.imgLoaded">
+    <div class="container">
+      <Profile />
+      <Hitokoto />
+      <Time />
+      <div>123</div>
     </div>
-  </Transition>
+  </div>
 </template>
 
 <script setup>
@@ -24,18 +23,16 @@ const state = inject('state')
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  transform: scale(1.2);
+  transform: scale(0.6);
   transition: transform 0.3s;
-  animation: fade-blur-main-in 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  animation-delay: 0.5s;
+  animation: fade-blur-main-in 0.7s cubic-bezier(0.22, 0.97, 0.45, 0.94) forwards;
+  animation-delay: 1.1s;
   z-index: 2;
-  overflow: auto;
-  padding: 7rem 0;
-  &.is-mobile {
-    color: red;
-  }
 }
 .container {
   display: flex;
@@ -46,5 +43,7 @@ const state = inject('state')
   width: 100%;
   // height: 100vh;
   margin: 0 auto;
+  padding: 7rem 0;
+  overflow: auto;
 }
 </style>
