@@ -42,12 +42,7 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .time {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.1rem;
-  text-align: center;
+  font-size: 2rem;
 
   .date {
     text-overflow: ellipsis;
