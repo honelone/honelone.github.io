@@ -1,6 +1,6 @@
 <template>
-  <div class="social custom-card">
-    <div class="social-item" v-for="(item, index) in socialList" :key="index">
+  <div class="external">
+    <div class="external-item" v-for="(item, index) in externalList" :key="index">
       <component :is="item.icon" />
       {{ item.title }}
     </div>
@@ -10,8 +10,10 @@
 <script setup>
 import IconGithub from '@/components/Icon/IconGithub.vue'
 import IconJuejin from '@/components/Icon/IconJuejin.vue'
+import IconBlog from '@/components/Icon/IconBlog.vue'
+import IconExternal from '@/components/Icon/IconExternal.vue'
 
-const socialList = [
+const externalList = [
   {
     title: 'Juejin',
     icon: IconJuejin,
@@ -20,17 +22,29 @@ const socialList = [
     title: 'Github',
     icon: IconGithub,
   },
+  {
+    title: 'Blog',
+    icon: IconBlog,
+  },
+  {
+    title: 'Pages',
+    icon: IconExternal,
+  },
 ]
 </script>
 
 <style scoped lang="less">
-.social {
-  .social-item {
+.external {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px;
+  .external-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    font-size: 1.5rem;
+    gap: 4px;
+    font-size: 1.2rem;
     color: #fff;
     cursor: pointer;
     transition: all 0.3s;
