@@ -2,7 +2,8 @@
   <!--  :class="state.imgLoaded ? 'loaded' : null" -->
   <div class="loading-wrapper" :class="state.imgLoaded ? 'loaded' : null" @click="handleAppearance">
     <!-- <LoadingLight /> -->
-    <LoadingCircle />
+    <!-- <LoadingCircle /> -->
+    <LoadingRing/>
     <span class="loading-wrapper-tip"> Loading... </span>
   </div>
 </template>
@@ -10,6 +11,7 @@
 <script setup>
 import { nextTick, watch, inject } from 'vue'
 import LoadingCircle from './LoadingCircle.vue'
+import LoadingRing from './LoadingRing.vue'
 // import LoadingLight from './LoadingLight.vue'
 
 const state = inject('state')
