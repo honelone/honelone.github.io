@@ -6,7 +6,6 @@
 
 <script lang="tsx" setup>
 const getStyle = (item) => {
-  console.log('getStyle item: ', item)
   const d = 2 * item + 5
   return {
     margin: -(0.5 * d) + 'em',

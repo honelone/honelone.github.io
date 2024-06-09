@@ -12,7 +12,12 @@
           </div>
         </div>
         <div class="external">
-          <div class="external-item" v-for="(item, index) in externalList" :key="index">
+          <div
+            class="external-item"
+            v-for="(item, index) in externalList"
+            :key="index"
+            @click="handleLink(item.link)"
+          >
             <CustomIcon :name="item.icon" size="24" />
             {{ item.title }}
           </div>
@@ -29,11 +34,16 @@ import CustomIcon from '@/components/Icon/CustomIcon.vue'
 const state = inject('state')
 
 const externalList = [
-  { title: 'Juejin', icon: 'juejin' },
-  { title: 'Github', icon: 'github' },
-  { title: 'Blog', icon: 'blog' },
-  { title: 'Pages', icon: 'external' },
+  { title: 'Github', icon: 'github', link: '' },
+  { title: 'Juejin', icon: 'juejin', link: '' },
+  { title: 'Blog', icon: 'blog', link: 'https://honelone.github.io/note/' },
+  { title: 'Pages', icon: 'external', link: 'https://honelone.github.io/pages/' },
 ]
+const handleLink = (link) => {
+  if (link) {
+    window.open(link)
+  }
+}
 
 const perspectiveContainerRef = ref(null)
 const maxRotate = 10
@@ -95,97 +105,112 @@ onMounted(() => {
   animation-delay: 1.1s;
   z-index: 2;
   perspective: 30em;
-}
-.perspective-container {
-  border-radius: 12px;
-  transition: all 0.3s ease-out;
-  transform: rotateX(calc(v-bind(rotateX) * 1deg)) rotateY(calc(v-bind(rotateY) * 1deg));
-}
-.container {
-  transform-style: preserve-3d;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin: 0 auto;
-  overflow: auto;
-  padding: 24px;
-  border-radius: 12px;
-  background-color: #00000050;
-  backdrop-filter: blur(12px);
-  user-select: none;
-  transition: all 0.3s ease-out;
-  box-shadow: 20px 20px 75px rgba(0, 0, 0, 0.5);
+  .perspective-container {
+    border-radius: 12px;
+    transition: all 0.3s ease-out;
+    transform: rotateX(calc(v-bind(rotateX) * 1deg)) rotateY(calc(v-bind(rotateY) * 1deg));
 
-  background-image: radial-gradient(
-    circle at calc(v-bind(radialX) * 1px) calc(v-bind(radialY) * 1px),
-    #aaaaaa55,
-    transparent
-  );
-
-  .profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    width: 30rem;
-    // height: 20rem;
-    .profile-img {
+    .container {
+      transform-style: preserve-3d;
       position: relative;
       display: flex;
-      justify-content: center;
-      width: 6rem;
-      height: 6rem;
-      border: 4px solid #f6ede4;
-      border-radius: 50%;
-      overflow: hidden;
-      img {
-        width: 100%;
-        -webkit-user-drag: none; // 防止图片拖拽的另一种方法，和标签上的 draggable="false" 效果一致
-      }
-    }
-    .profile-text {
-      display: flex;
       flex-direction: column;
-      gap: 4px;
-      font-size: 2rem;
-      font-weight: bold;
-      pointer-events: none;
-      filter: opacity(0.7);
-      span {
-        transform: translateZ(1px);
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(45deg, #f5576c 10%, #fee140 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin: 0 auto;
+      overflow: auto;
+      padding: 24px;
+      border-radius: 12px;
+      background-color: #00000050;
+      backdrop-filter: blur(12px);
+      user-select: none;
+      transition: all 0.3s ease-out;
+      box-shadow: 20px 20px 75px rgba(0, 0, 0, 0.5);
+
+      background-image: radial-gradient(
+        circle at calc(v-bind(radialX) * 1px) calc(v-bind(radialY) * 1px),
+        #aaaaaa55,
+        transparent
+      );
+
+      .profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        width: 30rem;
+        // height: 20rem;
+        .profile-img {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          width: 6rem;
+          height: 6rem;
+          border: 4px solid #f6ede4;
+          border-radius: 50%;
+          overflow: hidden;
+          img {
+            width: 100%;
+            -webkit-user-drag: none; // 防止图片拖拽的另一种方法，和标签上的 draggable="false" 效果一致
+          }
+        }
+        .profile-text {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-size: 2rem;
+          font-weight: bold;
+          pointer-events: none;
+          filter: opacity(0.7);
+          span {
+            transform: translateZ(1px);
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(45deg, #f5576c 10%, #fee140 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+
+      .external {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        .external-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.7rem;
+          color: #fff;
+          cursor: pointer;
+          transition: all 0.3s;
+          &:hover {
+            transform: scale(1.05);
+            svg {
+              fill: #4facfe;
+            }
+            color: #4facfe;
+          }
+        }
       }
     }
   }
-
-  .external {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 24px;
-    width: 100%;
-    .external-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.7rem;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s;
-      &:hover {
-        transform: scale(1.05);
-        svg {
-          fill: #4facfe;
+  &.is-mobile {
+    padding: 1rem;
+    height: 70%;
+    .perspective-container {
+      .container {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        .profile {
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
         }
-        color: #4facfe;
       }
     }
   }
