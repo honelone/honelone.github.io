@@ -1,15 +1,13 @@
 <template>
   <div class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }" v-show="state.imgLoaded">
     <div class="perspective-container" ref="perspectiveContainerRef">
-      <div class="container">
+      <div class="container" ref="containerRef">
         <div class="profile">
           <div class="profile-img">
             <img src="@/assets/avatar.png" draggable="false" />
           </div>
-          <div class="profile-text">
-            <span>Hi, I'm Composition</span>
-            <span>Welcome to my page</span>
-          </div>
+          <div class="profile-text colorful">Hi, I'm Composition</div>
+          <div class="profile-text">Welcome to my page</div>
         </div>
         <div class="external">
           <div
@@ -18,7 +16,7 @@
             :key="index"
             @click="handleLink(item.link)"
           >
-            <CustomIcon :name="item.icon" size="24" />
+            <CustomIcon :name="item.icon" size="36" />
             {{ item.title }}
           </div>
         </div>
@@ -34,7 +32,7 @@ import CustomIcon from '@/components/Icon/CustomIcon.vue'
 const state = inject('state')
 
 const externalList = [
-  { title: 'Github', icon: 'github', link: '' },
+  { title: 'Github', icon: 'github', link: 'https://github.com/honelone' },
   { title: 'Juejin', icon: 'juejin', link: '' },
   { title: 'Blog', icon: 'blog', link: 'https://honelone.github.io/note/' },
   { title: 'Pages', icon: 'external', link: 'https://honelone.github.io/pages/' },
@@ -46,7 +44,8 @@ const handleLink = (link) => {
 }
 
 const perspectiveContainerRef = ref(null)
-const maxRotate = 10
+const containerRef = ref(null)
+const maxRotate = 20
 const rotateY = ref(0)
 const rotateX = ref(0)
 const radialX = ref(0)
@@ -54,38 +53,55 @@ const radialY = ref(0)
 onMounted(() => {
   perspectiveContainerRef.value.addEventListener('mousemove', (e) => {
     // console.log('e: ', perspectiveContainerRef.value.getBoundingClientRect())
-    const { width, height, left, top } = perspectiveContainerRef.value.getBoundingClientRect()
+    const { width, height, left, top } = containerRef.value.getBoundingClientRect()
     const centerX = width / 2
     const centerY = height / 2
     const offsetX = e.clientX - left
     const offsetY = e.clientY - top
 
-    rotateY.value = (maxRotate * (offsetX - centerX)) / centerX
-    rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * -1
+    window.requestAnimationFrame(() => {
+      rotateY.value = ((maxRotate * (offsetX - centerX)) / centerX) * 1
+      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * -1
 
-    radialX.value = offsetX
-    radialY.value = offsetY
+      radialX.value = offsetX
+      radialY.value = offsetY
+    })
   })
-  // window.addEventListener('mousemove', updateMouseReflection)
   perspectiveContainerRef.value.addEventListener('mouseleave', () => {
-    rotateY.value = 0
-    rotateX.value = 0
-    radialX.value = -100
-    radialY.value = -100
+    window.requestAnimationFrame(() => {
+      rotateY.value = 0
+      rotateX.value = 0
+      radialX.value = -100
+      radialY.value = -100
+    })
   })
 
-  window.ondevicemotion = (event) => {
-    var accelerationX = event.accelerationIncludingGravity.x
-    var accelerationY = event.accelerationIncludingGravity.y
-    var accelerationZ = event.accelerationIncludingGravity.z
-    // console.log(`${accelerationX},${accelerationY},${accelerationZ}`)
-    let xDeg = accelerationX / 10
-    let yDeg = accelerationY / 10
+  perspectiveContainerRef.value.addEventListener('touchmove', (e) => {
+    // console.log('e: ', { e, clientX: e.touches[0].clientX, clientY: e.touches[0].clientY })
+    e.preventDefault()
 
-    updateMouseReflection(yDeg * 180, xDeg * 100)
-    rotateY.value = yDeg * maxRotate
-    rotateX.value = xDeg * maxRotate
-  }
+    const { width, height, left, top } = containerRef.value.getBoundingClientRect()
+    const centerX = width / 2
+    const centerY = height / 2
+    const offsetX = e.touches[0].clientX - left
+    const offsetY = e.touches[0].clientY - top
+
+    window.requestAnimationFrame(() => {
+      rotateY.value = (maxRotate * (offsetX - centerX)) / centerX
+      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * -1
+
+      radialX.value = offsetX
+      radialY.value = offsetY
+    })
+  })
+  perspectiveContainerRef.value.addEventListener('touchend', () => {
+    window.requestAnimationFrame(() => {
+      rotateY.value = 0
+      rotateX.value = 0
+      radialX.value = -100
+      radialY.value = -100
+    })
+  })
 })
 </script>
 
@@ -104,15 +120,25 @@ onMounted(() => {
   animation: fade-blur-main-in 0.7s cubic-bezier(0.22, 0.97, 0.45, 0.94) forwards;
   animation-delay: 1.1s;
   z-index: 2;
-  perspective: 30em;
   .perspective-container {
     border-radius: 12px;
     transition: all 0.3s ease-out;
-    transform: rotateX(calc(v-bind(rotateX) * 1deg)) rotateY(calc(v-bind(rotateY) * 1deg));
+    perspective: 30em;
+    &::after {
+      position: absolute;
+      content: '';
+      top: -5rem;
+      bottom: -5rem;
+      left: -5rem;
+      right: -5rem;
+    }
+    &:hover {
+      .container {
+        box-shadow: 20px 20px 75px #00000080;
+      }
+    }
 
     .container {
-      transform-style: preserve-3d;
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -122,15 +148,16 @@ onMounted(() => {
       overflow: auto;
       padding: 24px;
       border-radius: 12px;
-      background-color: #00000050;
+      background-color: #00000040;
       backdrop-filter: blur(12px);
       user-select: none;
-      transition: all 0.3s ease-out;
-      box-shadow: 20px 20px 75px rgba(0, 0, 0, 0.5);
 
+      transition: all 0.3s ease-out;
+      transform-style: preserve-3d;
+      transform: rotateX(calc(v-bind(rotateX) * 1deg)) rotateY(calc(v-bind(rotateY) * 1deg));
       background-image: radial-gradient(
         circle at calc(v-bind(radialX) * 1px) calc(v-bind(radialY) * 1px),
-        #aaaaaa55,
+        #ffffff50,
         transparent
       );
 
@@ -138,9 +165,11 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 24px;
-        width: 30rem;
+        flex-direction: column;
+        gap: 12px;
+        width: 24rem;
         // height: 20rem;
+        z-index: 9;
         .profile-img {
           position: relative;
           display: flex;
@@ -163,13 +192,16 @@ onMounted(() => {
           font-weight: bold;
           pointer-events: none;
           filter: opacity(0.7);
-          span {
-            transform: translateZ(1px);
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(45deg, #f5576c 10%, #fee140 100%);
+          text-shadow: 1px 1px 1px #000, -1px -1px 1px #fff;
+
+          &.colorful {
+            text-shadow: none;
+            background: -webkit-linear-gradient(315deg, #01e5f7 10%, #2f1eb9 50%, #68e8d8 90%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 400% 400%;
+            animation: gradientAnimation 20s -10s ease infinite;
           }
         }
       }
@@ -178,12 +210,13 @@ onMounted(() => {
         display: flex;
         justify-content: space-around;
         width: 100%;
+        z-index: 9;
         .external-item {
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 4px;
-          font-size: 0.7rem;
+          font-size: 1rem;
           color: #fff;
           cursor: pointer;
           transition: all 0.3s;
@@ -200,7 +233,7 @@ onMounted(() => {
   }
   &.is-mobile {
     padding: 1rem;
-    height: 70%;
+    height: 80%;
     .perspective-container {
       .container {
         width: 100%;
@@ -210,6 +243,9 @@ onMounted(() => {
           flex-direction: column;
           width: 100%;
           height: 100%;
+          .profile-text {
+            font-size: 1.8rem;
+          }
         }
       }
     }
