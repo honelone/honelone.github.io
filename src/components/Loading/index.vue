@@ -3,7 +3,7 @@
   <div class="loading-wrapper" :class="state.imgLoaded ? 'loaded' : null" @click="handleAppearance">
     <!-- <LoadingLight /> -->
     <!-- <LoadingCircle /> -->
-    <LoadingRing/>
+    <LoadingRing />
     <span class="loading-wrapper-tip"> Loading... </span>
   </div>
 </template>
@@ -57,7 +57,7 @@ const handleAppearance = async () => {
   height: 100%;
   z-index: 999;
   overflow: hidden;
-  background: #537895;
+  background: #526e99;
   .loading-wrapper-tip {
     font-weight: bold;
     font-size: 20px;
