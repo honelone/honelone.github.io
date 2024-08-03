@@ -1,7 +1,7 @@
 <template>
-  <div class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }" v-show="state.imgLoaded">
-    <div class="perspective-container" ref="perspectiveContainerRef">
-      <div class="container" ref="containerRef">
+  <div v-show="state.imgLoaded" class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }">
+    <div ref="perspectiveContainerRef" class="perspective-container">
+      <div ref="containerRef" class="container">
         <div class="profile">
           <div class="profile-img">
             <img src="@/assets/avatar.png" draggable="false" />
@@ -120,6 +120,8 @@ onMounted(() => {
   animation: fade-blur-main-in 0.7s cubic-bezier(0.22, 0.97, 0.45, 0.94) forwards;
   animation-delay: 1.1s;
   z-index: 2;
+  user-select: none;
+  pointer-events: none;
   .perspective-container {
     border-radius: 12px;
     transition: all 0.3s ease-out;
@@ -151,6 +153,7 @@ onMounted(() => {
       background-color: #00000040;
       backdrop-filter: blur(12px);
       user-select: none;
+      pointer-events: all;
 
       transition: all 0.3s ease-out;
       transform-style: preserve-3d;
