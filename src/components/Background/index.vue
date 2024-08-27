@@ -1,17 +1,19 @@
 <template>
   <div class="background-wrapper">
-    <ImageBackground v-bind="$attrs" />
+    <!-- <ImageBackground v-bind="$attrs" /> -->
     <!-- <LightBackground /> -->
     <!-- <PopBackground /> -->
     <!-- <FilterBackground /> -->
+    <StarBackground />
   </div>
 </template>
 
 <script setup>
 import ImageBackground from './ImageBackground.vue'
-// import LightBackground from './LightBackground.vue'
+import LightBackground from './LightBackground.vue'
 // import PopBackground from './PopBackground.vue'
 // import FilterBackground from './FilterBackground.vue'
+import StarBackground from './StarBackground.vue'
 </script>
 
 <style lang="less" scoped>
