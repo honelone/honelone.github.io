@@ -4,7 +4,17 @@
   </div>
 </template>
 
-<script setup></script>
+<script lang="ts" setup>
+import { onMounted, inject } from 'vue'
+
+const state: any = inject('state')
+onMounted(() => {
+  const delay = Math.floor(Math.random() * (600 - 300 + 1)) + 300
+  setTimeout(() => {
+    state.setImgLoaded(true)
+  }, delay)
+})
+</script>
 
 <style scoped lang="less">
 .filter-background-wrapper {

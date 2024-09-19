@@ -60,8 +60,8 @@ onMounted(() => {
     const offsetY = e.clientY - top
 
     window.requestAnimationFrame(() => {
-      rotateY.value = ((maxRotate * (offsetX - centerX)) / centerX) * 1
-      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * -1
+      rotateY.value = ((maxRotate * (offsetX - centerX)) / centerX) * -1
+      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * 1
 
       radialX.value = offsetX
       radialY.value = offsetY
@@ -87,8 +87,8 @@ onMounted(() => {
     const offsetY = e.touches[0].clientY - top
 
     window.requestAnimationFrame(() => {
-      rotateY.value = (maxRotate * (offsetX - centerX)) / centerX
-      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * -1
+      rotateY.value = ((maxRotate * (offsetX - centerX)) / centerX) * -1
+      rotateX.value = ((maxRotate * (offsetY - centerY)) / centerY) * 1
 
       radialX.value = offsetX
       radialY.value = offsetY
