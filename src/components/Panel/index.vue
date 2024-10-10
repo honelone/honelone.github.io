@@ -2,22 +2,13 @@
   <div v-show="state.imgLoaded" class="panel-wrapper" :class="{ 'is-mobile': state.isMobile }">
     <div ref="perspectiveContainerRef" class="perspective-container">
       <div ref="containerRef" class="container">
-        <div class="profile">
-          <div class="profile-img">
-            <img src="@/assets/avatar.png" draggable="false" />
-          </div>
-          <div class="profile-text colorful">Hi, I'm Composition</div>
-          <div class="profile-text">Welcome to my page</div>
-        </div>
-        <div class="external">
-          <div
-            class="external-item"
-            v-for="(item, index) in externalList"
-            :key="index"
-            @click="handleLink(item.link)"
-          >
-            <CustomIcon :name="item.icon" size="36" />
-            {{ item.title }}
+        <div class="inner">
+          <Profile />
+          <div class="inner-right">
+            <Time />
+            <Weather />
+            <Hitokoto />
+            <External />
           </div>
         </div>
       </div>
@@ -27,21 +18,13 @@
 
 <script setup>
 import { ref, inject, onMounted } from 'vue'
-import CustomIcon from '@/components/Icon/CustomIcon.vue'
+import Time from './backup/Time.vue'
+import Weather from './backup/Weather.vue'
+import Profile from './backup/Profile.vue'
+import External from './backup/External.vue'
+import Hitokoto from './backup/Hitokoto.vue'
 
 const state = inject('state')
-
-const externalList = [
-  { title: 'Github', icon: 'github', link: 'https://github.com/honelone' },
-  { title: 'Juejin', icon: 'juejin', link: '' },
-  { title: 'Blog', icon: 'blog', link: 'https://honelone.github.io/note/' },
-  { title: 'Pages', icon: 'external', link: 'https://honelone.github.io/pages/' },
-]
-const handleLink = (link) => {
-  if (link) {
-    window.open(link)
-  }
-}
 
 const perspectiveContainerRef = ref(null)
 const containerRef = ref(null)
@@ -136,20 +119,12 @@ onMounted(() => {
     }
     &:hover {
       .container {
+        scale: 1.1;
         box-shadow: 20px 20px 75px #00000080;
       }
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin: 0 auto;
-      overflow: auto;
-      padding: 24px;
-      border-radius: 12px;
       background-color: #00000040;
       backdrop-filter: blur(12px);
       user-select: none;
@@ -160,78 +135,9 @@ onMounted(() => {
       transform: rotateX(calc(v-bind(rotateX) * 1deg)) rotateY(calc(v-bind(rotateY) * 1deg));
       background-image: radial-gradient(
         circle at calc(v-bind(radialX) * 1px) calc(v-bind(radialY) * 1px),
-        #ffffff50,
+        #00000070 1%,
         transparent
       );
-
-      .profile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        gap: 12px;
-        width: 24rem;
-        // height: 20rem;
-        z-index: 9;
-        .profile-img {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          width: 6rem;
-          height: 6rem;
-          border: 4px solid #f6ede4;
-          border-radius: 50%;
-          overflow: hidden;
-          img {
-            width: 100%;
-            -webkit-user-drag: none; // 防止图片拖拽的另一种方法，和标签上的 draggable="false" 效果一致
-          }
-        }
-        .profile-text {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          font-size: 2rem;
-          font-weight: bold;
-          pointer-events: none;
-          filter: opacity(0.7);
-          text-shadow: 1px 1px 1px #000, -1px -1px 1px #fff;
-
-          &.colorful {
-            text-shadow: none;
-            background: -webkit-linear-gradient(315deg, #01e5f7 10%, #2f1eb9 50%, #68e8d8 90%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 400% 400%;
-            animation: gradientAnimation 20s -10s ease infinite;
-          }
-        }
-      }
-
-      .external {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        z-index: 9;
-        .external-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          font-size: 1rem;
-          color: #fff;
-          cursor: pointer;
-          transition: all 0.3s;
-          &:hover {
-            transform: scale(1.05);
-            svg {
-              fill: #4facfe;
-            }
-            color: #4facfe;
-          }
-        }
-      }
     }
   }
   &.is-mobile {
@@ -242,6 +148,9 @@ onMounted(() => {
         width: 100%;
         height: 100%;
         overflow: scroll;
+        .inner {
+          flex-direction: column;
+        }
         .profile {
           flex-direction: column;
           width: 100%;
@@ -250,6 +159,26 @@ onMounted(() => {
             font-size: 1.8rem;
           }
         }
+      }
+    }
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 24px;
+    border-radius: 12px;
+    .inner {
+      display: flex;
+      gap: 24px;
+      .inner-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
       }
     }
   }

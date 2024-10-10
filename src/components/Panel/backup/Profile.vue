@@ -1,11 +1,11 @@
 <template>
-  <div class="profile custom-card">
+  <div class="profile">
     <div class="profile-img">
       <div class="profile-img-inner">
-        <img src="@/assets/avatar.png" />
+        <img src="@/assets/avatar.png" draggable="false" />
       </div>
     </div>
-    <div class="profile-back">Composition</div>
+    <div class="profile-text colorful">Composition</div>
   </div>
 </template>
 
@@ -13,12 +13,17 @@
 
 <style scoped lang="less">
 .profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
   .profile-img {
     position: relative;
     display: flex;
     justify-content: center;
-    width: 12.5rem;
-    height: 12.5rem;
+    width: 8rem;
+    height: 8rem;
     border: 4px solid #f6ede4;
     border-radius: 50%;
     .profile-img-inner {
@@ -28,7 +33,7 @@
       height: 100%;
       border-radius: 50%;
       overflow: hidden;
-      transition: all 0.3s;
+      transition: all 0.5s;
       &:hover {
         bottom: -1px;
         height: 110%;
@@ -40,20 +45,27 @@
       img {
         width: 100%;
         // height: 100%;
-        transition: all 0.3s;
+        transition: all 0.5s;
+        -webkit-user-drag: none;
       }
     }
   }
-  .profile-back {
-    font-size: 2em;
+  .profile-text {
+    font-size: 1.3em;
     font-weight: bold;
     pointer-events: none;
     filter: opacity(0.7);
-    background: linear-gradient(45deg, #f5576c 10%, #fee140 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    // background-size: 200% 200%;
+    text-shadow: 1px 1px 1px #000, -1px -1px 1px #fff;
+
+    &.colorful {
+      text-shadow: none;
+      background: -webkit-linear-gradient(315deg, #f5576c 10%, #fee140 50%, #68e8d8 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400% 400%;
+      animation: gradientAnimation 20s -10s ease infinite;
+    }
   }
 }
 </style>

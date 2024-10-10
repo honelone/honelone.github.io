@@ -1,50 +1,45 @@
 <template>
   <div class="external">
-    <div class="external-item" v-for="(item, index) in externalList" :key="index">
-      <component :is="item.icon" />
+    <div
+      class="external-item"
+      v-for="(item, index) in externalList"
+      :key="index"
+      @click="handleLink(item.link)"
+    >
+      <CustomIcon :name="item.icon" size="36" />
       {{ item.title }}
     </div>
   </div>
 </template>
 
 <script setup>
-import IconGithub from '@/components/Icon/IconGithub.vue'
-import IconJuejin from '@/components/Icon/IconJuejin.vue'
-import IconBlog from '@/components/Icon/IconBlog.vue'
-import IconExternal from '@/components/Icon/IconExternal.vue'
-
+import CustomIcon from '@/components/Icon/CustomIcon.vue'
 const externalList = [
-  {
-    title: 'Juejin',
-    icon: IconJuejin,
-  },
-  {
-    title: 'Github',
-    icon: IconGithub,
-  },
-  {
-    title: 'Blog',
-    icon: IconBlog,
-  },
-  {
-    title: 'Pages',
-    icon: IconExternal,
-  },
+  { title: 'Github', icon: 'github', link: 'https://github.com/honelone' },
+  { title: 'Juejin', icon: 'juejin', link: 'https://juejin.cn/user/3236585798371246' },
+  { title: 'Blog', icon: 'blog', link: 'https://honelone.github.io/note/' },
+  { title: 'Pages', icon: 'external', link: 'https://honelone.github.io/pages/' },
 ]
+
+const handleLink = (link) => {
+  if (link) {
+    window.open(link)
+  }
+}
 </script>
 
 <style scoped lang="less">
 .external {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  padding: 24px;
+  width: 100%;
+  z-index: 9;
   .external-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #fff;
     cursor: pointer;
     transition: all 0.3s;
